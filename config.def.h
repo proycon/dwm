@@ -141,11 +141,7 @@ static Key keys[] = {
 	{ MODKEY,						XK_F12, spawn, SHCMD("picom -cC -z -r 3 -l 2 -t 2 -f") }, /* start compositor */
 	{ MODKEY|ShiftMask,				XK_F12, spawn, SHCMD("killall picom") }, /* stop compositor */
 	{ MODKEY,						XK_Escape, spawn, SHCMD("~/dotfiles/lock.sh") }, /* lock screen */
-<<<<<<< HEAD
 	{ MODKEY|ShiftMask,				XK_Escape, spawn, SHCMD("~/dotfiles/suspend.sh") }, /* lock screen */
-=======
-	{ MODKEY|ShiftMask,				XK_Escape spawn, SHCMD("~/dotfiles/suspend.sh") }, /* lock screen */
->>>>>>> config
     { ALTKEY,                       XK_F4,  spawn, SHCMD("pkill -f notifyclient.py") }, /* restart notifyclient */
 	{ 0, XF86XK_AudioPrev,		spawn,		SHCMD("mpc prev") },
 	{ 0, XF86XK_AudioNext,		spawn,		SHCMD("mpc next") },
