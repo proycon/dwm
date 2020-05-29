@@ -8,14 +8,14 @@ static const unsigned int systrayspacing = 2;   /* systray spacing */
 static const int systraypinningfailfirst = 1;   /* 1: if pinning fails, display systray on the first monitor, False: display systray on the last monitor*/
 static const int showsystray        = 1;     /* 0 means no systray */
 static const int showbar            = 1;        /* 0 means no bar */
-static const int topbar             = 1;        /* 0 means bottom bar */
+static const int topbar             = 0;        /* 0 means bottom bar */
 static const char *fonts[]          = { "monospace:size=10" };
 static const char dmenufont[]       = "monospace:size=10";
-static const char col_gray1[]       = "#222222";
+static const char col_gray1[]       = "#282828";
 static const char col_gray2[]       = "#444444";
-static const char col_gray3[]       = "#bbbbbb";
+static const char col_gray3[]       = "#a89984";
 static const char col_gray4[]       = "#eeeeee";
-static const char col_cyan[]        = "#005577";
+static const char col_cyan[]        = "#98971a";
 static const char *colors[][3]      = {
 	/*               fg         bg         border   */
 	[SchemeNorm] = { col_gray3, col_gray1, col_gray2 },
@@ -23,7 +23,7 @@ static const char *colors[][3]      = {
 };
 
 /* tagging */
-static const char *tags[] = { "1", "2", "3", "4", "5", "6", "7", "8", "9" };
+static const char *tags[] = { "一", "二", "三", "四", "五", "六", "七", "八", "九" };
 
 static const Rule rules[] = {
 	/* xprop(1):
@@ -31,8 +31,11 @@ static const Rule rules[] = {
 	 *	WM_NAME(STRING) = title
 	 */
 	/* class      instance    title       tags mask     isfloating   monitor */
-	{ "Gimp",     NULL,       NULL,       0,            1,           -1 },
+	{ "Gimp",     NULL,       NULL,       0,            0,           -1 },
 	{ "Firefox",  NULL,       NULL,       1 << 8,       0,           -1 },
+	{ "Menu",     NULL,       NULL,       0,            1,           -1 },
+	{ "Lxappearance",     NULL,       NULL,       0,            1,           -1 },
+	{ "Lightdm-gtk-greeter-settings",     NULL,       NULL,       0,            1,           -1 },
 };
 
 /* layout(s) */
@@ -52,7 +55,8 @@ static const Layout layouts[] = {
 };
 
 /* key definitions */
-#define MODKEY Mod1Mask
+#define MODKEY Mod4Mask /* super */
+#define ALTKEY Mod1Mask /* alt */
 #define TAGKEYS(KEY,TAG) \
 	{ MODKEY,                       KEY,      view,           {.ui = 1 << TAG} }, \
 	{ MODKEY|ControlMask,           KEY,      toggleview,     {.ui = 1 << TAG} }, \
@@ -63,7 +67,7 @@ static const Layout layouts[] = {
 	{ MOD, XK_k,     ACTION##stack, {.i = INC(-1) } }, \
 	{ MOD, XK_grave, ACTION##stack, {.i = PREVSEL } }, \
 	{ MOD, XK_q,     ACTION##stack, {.i = 0 } }, \
-	{ MOD, XK_a,     ACTION##stack, {.i = 1 } }, \
+	{ MOD|ShiftMask, XK_a,     ACTION##stack, {.i = 1 } }, \
 	{ MOD, XK_z,     ACTION##stack, {.i = 2 } }, \
 	{ MOD, XK_x,     ACTION##stack, {.i = -1 } },
 
@@ -72,16 +76,17 @@ static const Layout layouts[] = {
 
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
-static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, NULL };
-static const char *termcmd[]  = { "st", NULL };
+static const char *dmenucmd[] = { "rofi", "-font", "Source Code Pro for Powerline 16", "-combi-modi", "window,drun,run", "-show", "combi", "-modi","combi", NULL };
+static const char *termcmd[]  = { "alacritty", NULL };
 static const char scratchpadname[] = "scratchpad";
-static const char *scratchpadcmd[] = { "st", "-t", scratchpadname, "-g", "120x34", NULL };
+static const char *scratchpadcmd[] = { "urxvt","-name",scratchpadname,"-e","/home/proycon/bin/tm",scratchpadname, NULL };
 
+#include <X11/XF86keysym.h>
 static Key keys[] = {
 	/* modifier                     key        function        argument */
-	{ MODKEY,                       XK_p,      spawn,          {.v = dmenucmd } },
+	{ MODKEY,                       XK_apostrophe,      spawn,          {.v = dmenucmd } },
 	{ MODKEY|ShiftMask,             XK_Return, spawn,          {.v = termcmd } },
-	{ MODKEY,                       XK_grave,  togglescratch,  {.v = scratchpadcmd } },
+	{ MODKEY,                       XK_a,  togglescratch,  {.v = scratchpadcmd } },
 	{ MODKEY,                       XK_b,      togglebar,      {0} },
 	STACKKEYS(MODKEY,                          focus)
 	STACKKEYS(MODKEY|ShiftMask,                push)
@@ -116,6 +121,42 @@ static Key keys[] = {
 	TAGKEYS(                        XK_8,                      7)
 	TAGKEYS(                        XK_9,                      8)
 	{ MODKEY|ShiftMask,             XK_BackSpace,      quit,           {0} },
+    { ALTKEY,                       XK_F8, spawn, SHCMD("fcitx") },
+    { ALTKEY,                       XK_F9, spawn, SHCMD("killall fcitx || setxkbmap proylatin") },
+    { ALTKEY,                       XK_F10, spawn, SHCMD("killall fcitx || setxkbmap proyeo") },
+    { ALTKEY|ShiftMask,             XK_F10, spawn, SHCMD("killall fcitx || setxkbmap proyel") },
+    { ALTKEY,                       XK_F11, spawn, SHCMD("killall fcitx || setxkbmap proyru") },
+    { ALTKEY,                       XK_F12, spawn, SHCMD("killall fcitx || setxkbmap proyar") },
+    { ALTKEY|ShiftMask,             XK_F12, spawn, SHCMD("killall fcitx || setxkbmap proylogic") },
+	{ MODKEY,						XK_F1, spawn, SHCMD("alacritty --working-directory ~ -t mail -e ssh -Y -A -t anaproy.nl ~/tm_alot") },
+	{ MODKEY,						XK_F2, spawn, SHCMD("alacritty --working-directory ~ -t vim -e ~/bin/tm nvim") },
+	{ ALTKEY,						XK_F2, spawn, SHCMD("~/bin/lala") }, /* start music */
+	{ ALTKEY|ShiftMask,				XK_F2, spawn, SHCMD("killall mplayer; mpc stop") }, /* stop music */
+	{ MODKEY,						XK_F3, spawn, SHCMD("$BROWSER") },
+	{ ALTKEY,						XK_F5, spawn, SHCMD("~/dotfiles/emojiselect.sh") }, /* select emoji */
+	{ MODKEY,						XK_F5, spawn, SHCMD("~/dotfiles/opensxiv.sh") }, /* gallery */
+	{ MODKEY|ShiftMask,				XK_F5, spawn, SHCMD("~/dotfiles/openinstagram.sh") }, /* instagram gallery */
+	{ MODKEY,						XK_F6, spawn, SHCMD("alacritty --working-directory ~ -t newsboat -e newsboat") }, /* RSS reader */
+	{ MODKEY,						XK_F7, spawn, SHCMD("alacritty --working-directory ~ -t ncmpcpp -e ncmpcpp") }, /* Music browser */
+	{ MODKEY,						XK_F12, spawn, SHCMD("picom -cC -z -r 3 -l 2 -t 2 -f") }, /* start compositor */
+	{ MODKEY|ShiftMask,				XK_F12, spawn, SHCMD("killall picom") }, /* stop compositor */
+	{ MODKEY,						XK_Escape, spawn, SHCMD("~/dotfiles/lock.sh") }, /* lock screen */
+	{ MODKEY|ShiftMask,				XK_Escape, spawn, SHCMD("~/dotfiles/suspend.sh") }, /* lock screen */
+    { ALTKEY,                       XK_F4,  spawn, SHCMD("pkill -f notifyclient.py") }, /* restart notifyclient */
+	{ 0, XF86XK_AudioPrev,		spawn,		SHCMD("mpc prev") },
+	{ 0, XF86XK_AudioNext,		spawn,		SHCMD("mpc next") },
+	{ 0, XF86XK_AudioPause,		spawn,		SHCMD("mpc pause") },
+	{ 0, XF86XK_AudioPlay,		spawn,		SHCMD("mpc play") },
+	{ 0, XF86XK_AudioStop,		spawn,		SHCMD("mpc stop") },
+	{ 0, XF86XK_AudioRewind,	spawn,		SHCMD("mpc seek -10") },
+	{ 0, XF86XK_AudioForward,	spawn,		SHCMD("mpc seek +10") },
+	{ 0, XF86XK_AudioMedia,		spawn,		SHCMD("alacritty --working-directory ~ -t ncmpcpp -e ncmpcpp") },
+	{ 0, XF86XK_AudioMute,		spawn,		SHCMD("pamixer -t; kill -44 $(pidof dwmblocks)") },
+	{ 0, XF86XK_AudioRaiseVolume,	spawn,		SHCMD("paactl set-sink-volume 0 +5%") },
+	{ 0, XF86XK_AudioLowerVolume,	spawn,		SHCMD("pactl set-sink-volume 0 -5%") },
+	{ 0, XF86XK_AudioMute,	spawn,		SHCMD("pactl set-sink-mute 0 toggle") },
+	{ 0, XF86XK_MonBrightnessDown,	spawn,		SHCMD("~/dotfiles/bright_down.sh") },
+	{ 0, XF86XK_MonBrightnessUp,	spawn,		SHCMD("~/dotfiles/bright_up.sh") },
 };
 
 /* button definitions */
