@@ -45,6 +45,7 @@ static const Layout layouts[] = {
 
 /* key definitions */
 #define MODKEY Mod4Mask /* super */
+#define ALTKEY Mod1Mask /* alt */
 #define TAGKEYS(KEY,TAG) \
 	{ MODKEY,                       KEY,      view,           {.ui = 1 << TAG} }, \
 	{ MODKEY|ControlMask,           KEY,      toggleview,     {.ui = 1 << TAG} }, \
@@ -93,7 +94,14 @@ static Key keys[] = {
 	TAGKEYS(                        XK_7,                      6)
 	TAGKEYS(                        XK_8,                      7)
 	TAGKEYS(                        XK_9,                      8)
-	{ MODKEY|ShiftMask,             XK_q,      quit,           {0} },
+	{ MODKEY|ShiftMask,             XK_BackSpace,      quit,           {0} },
+    { ALTKEY,                       XK_F8,  SHCMD("fcitx") },
+    { ALTKEY,                       XK_F9,  SHCMD("killall fcitx || setxkbmap proylatin") },
+    { ALTKEY,                       XK_F10,  SHCMD("killall fcitx || setxkbmap proyeo") },
+    { ALTKEY|ShiftMask,             XK_F10,  SHCMD("killall fcitx || setxkbmap proyel") },
+    { ALTKEY,                       XK_F11,  SHCMD("killall fcitx || setxkbmap proyru") },
+    { ALTKEY,                       XK_F12,  SHCMD("killall fcitx || setxkbmap proyar") },
+    { ALTKEY|ShiftMask,             XK_F12,  SHCMD("killall fcitx || setxkbmap proylogic") },
 };
 
 /* button definitions */
