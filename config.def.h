@@ -130,7 +130,7 @@ static Key keys[] = {
     { ALTKEY,                       XK_F11, spawn, SHCMD("killall fcitx || setxkbmap proyru") },
     { ALTKEY,                       XK_F12, spawn, SHCMD("killall fcitx || setxkbmap proyar") },
     { ALTKEY|ShiftMask,             XK_F12, spawn, SHCMD("killall fcitx || setxkbmap proylogic") },
-	{ MODKEY,						XK_F1, spawn, SHCMD("alacritty --working-directory ~ -t mail -e ssh -Y -A -t anaproy.nl ~/tm_alot") },
+	{ MODKEY,						XK_F1, spawn, SHCMD("alacritty --working-directory ~ -t mail -e ssh -Y -A -t anaproy.nl ~/bin/tm_alot") },
 	{ MODKEY,						XK_F2, spawn, SHCMD("alacritty --working-directory ~ -t vim -e ~/bin/tm nvim") },
 	{ ALTKEY,						XK_F2, spawn, SHCMD("~/bin/lala") }, /* start music */
 	{ ALTKEY|ShiftMask,				XK_F2, spawn, SHCMD("killall mplayer; mpc stop") }, /* stop music */
@@ -140,8 +140,8 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,				XK_F5, spawn, SHCMD("~/dotfiles/openinstagram.sh") }, /* instagram gallery */
 	{ MODKEY,						XK_F6, spawn, SHCMD("alacritty --working-directory ~ -t newsboat -e newsboat") }, /* RSS reader */
 	{ MODKEY,						XK_F7, spawn, SHCMD("alacritty --working-directory ~ -t ncmpcpp -e ncmpcpp") }, /* Music browser */
-	{ MODKEY,						XK_F12, spawn, SHCMD("picom -cC -z -r 3 -l 2 -t 2 -f") }, /* start compositor */
-	{ MODKEY|ShiftMask,				XK_F12, spawn, SHCMD("killall picom") }, /* stop compositor */
+	{ MODKEY,						XK_F8, spawn, SHCMD("picom -cC -z -r 3 -l 2 -t 2 -f") }, /* start compositor */
+	{ MODKEY|ShiftMask,				XK_F8, spawn, SHCMD("killall picom") }, /* stop compositor */
 	{ MODKEY,						XK_Escape, spawn, SHCMD("~/dotfiles/lock.sh") }, /* lock screen */
 	{ MODKEY|ShiftMask,				XK_Escape, spawn, SHCMD("~/dotfiles/suspend.sh") }, /* lock screen */
     { ALTKEY,                       XK_F4,  spawn, SHCMD("pkill -f notifyclient.py") }, /* restart notifyclient */
@@ -153,12 +153,15 @@ static Key keys[] = {
 	{ 0, XF86XK_AudioRewind,	spawn,		SHCMD("mpc seek -10") },
 	{ 0, XF86XK_AudioForward,	spawn,		SHCMD("mpc seek +10") },
 	{ 0, XF86XK_AudioMedia,		spawn,		SHCMD("alacritty --working-directory ~ -t ncmpcpp -e ncmpcpp") },
-	{ 0, XF86XK_AudioMute,		spawn,		SHCMD("pamixer -t; kill -44 $(pidof dwmblocks)") },
-	{ 0, XF86XK_AudioRaiseVolume,	spawn,		SHCMD("paactl set-sink-volume 0 +5%") },
-	{ 0, XF86XK_AudioLowerVolume,	spawn,		SHCMD("pactl set-sink-volume 0 -5%") },
+	{ 0, XF86XK_AudioRaiseVolume,	spawn,		SHCMD("pactl set-sink-volume 1 +5%") },
+	{ 0, XF86XK_AudioLowerVolume,	spawn,		SHCMD("pactl set-sink-volume 1 -5%") },
 	{ 0, XF86XK_AudioMute,	spawn,		SHCMD("pactl set-sink-mute 0 toggle") },
 	{ 0, XF86XK_MonBrightnessDown,	spawn,		SHCMD("~/dotfiles/bright_down.sh") },
 	{ 0, XF86XK_MonBrightnessUp,	spawn,		SHCMD("~/dotfiles/bright_up.sh") },
+	{ MODKEY, XK_F12,	spawn,		SHCMD("pactl set-sink-volume 1 +5%") },
+	{ MODKEY, XK_F11,	spawn,		SHCMD("pactl set-sink-volume 1 -5%") },
+	{ MODKEY, XK_F10,	spawn,		SHCMD("pactl set-sink-mute 1 toggle") },
+	{ MODKEY, XK_F9,	spawn,		SHCMD("mpc next") },
 };
 
 /* button definitions */
