@@ -135,7 +135,7 @@ static Key keys[] = {
 	{ ALTKEY,						XK_F2, spawn, SHCMD("~/bin/lala") }, /* start music */
 	{ ALTKEY|ShiftMask,				XK_F2, spawn, SHCMD("killall mplayer; mpc stop") }, /* stop music */
 	{ MODKEY,						XK_F3, spawn, SHCMD("$BROWSER") },
-	{ ALTKEY,						XK_F5, spawn, SHCMD("~/dotfiles/emojiselect.sh") }, /* select emoji */
+	{ ALTKEY,						XK_F5, spawn, SHCMD("~/dotfiles/emojiselect") }, /* select emoji */
 	{ MODKEY,						XK_F5, spawn, SHCMD("~/dotfiles/opensxiv.sh") }, /* gallery */
 	{ MODKEY|ShiftMask,				XK_F5, spawn, SHCMD("~/dotfiles/openinstagram.sh") }, /* instagram gallery */
 	{ MODKEY,						XK_F6, spawn, SHCMD("alacritty --working-directory ~ -t newsboat -e newsboat") }, /* RSS reader */
