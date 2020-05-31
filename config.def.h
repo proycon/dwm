@@ -96,7 +96,7 @@ static Key keys[] = {
 	{ MODKEY,                       XK_l,      setmfact,       {.f = +0.05} },
 	{ MODKEY,                       XK_Return, zoom,           {0} },
 	{ MODKEY,                       XK_Tab,    view,           {0} },
-	{ MODKEY|ShiftMask,             XK_c,      killclient,     {0} },
+	{ MODKEY|ShiftMask,             XK_q,      killclient,     {0} },
 	{ MODKEY,                       XK_t,      setlayout,      {.v = &layouts[0]} },
 	{ MODKEY,                       XK_f,      setlayout,      {.v = &layouts[1]} },
 	{ MODKEY,                       XK_m,      setlayout,      {.v = &layouts[2]} },
@@ -136,6 +136,8 @@ static Key keys[] = {
 	{ ALTKEY|ShiftMask,				XK_F2, spawn, SHCMD("killall mplayer; mpc stop") }, /* stop music */
 	{ MODKEY,						XK_F3, spawn, SHCMD("$BROWSER") },
 	{ ALTKEY,						XK_F5, spawn, SHCMD("~/dotfiles/emojiselect") }, /* select emoji */
+	{ MODKEY,						XK_F4, spawn, SHCMD("scrot") }, /* screenshot */
+	{ MODKEY|ShiftMask,				XK_F4, spawn, SHCMD("scrot --focused") }, /* screenshot */
 	{ MODKEY,						XK_F5, spawn, SHCMD("~/dotfiles/opensxiv.sh") }, /* gallery */
 	{ MODKEY|ShiftMask,				XK_F5, spawn, SHCMD("~/dotfiles/openinstagram.sh") }, /* instagram gallery */
 	{ MODKEY,						XK_F6, spawn, SHCMD("alacritty --working-directory ~ -t newsboat -e newsboat") }, /* RSS reader */
