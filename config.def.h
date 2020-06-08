@@ -54,10 +54,10 @@ static const Layout layouts[] = {
 	{ "",      NULL },    /* no layout function means floating behavior */
 	{ "",      monocle },
 	{ "",      centeredmaster },
-	{ "⚎",      bstack },
-	{ "",      bstackhoriz },
-	{ "_III_",    tstack },
-	{ "^===^",      tstackhoriz },
+	{ "",      bstack },
+	{ "",      bstackhoriz },
+	{ "",    tstack },
+	{ "",      tstackhoriz },
 	{ NULL,       NULL },
 };
 
