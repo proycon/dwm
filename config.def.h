@@ -37,6 +37,7 @@ static const Rule rules[] = {
 	{ "Menu",     NULL,       NULL,       0,            1,           0,          0,        -1 },
 	{ "Lxappearance",     NULL,       NULL,       0,            1,    0,          0,               -1 },
 	{ "Lightdm-gtk-greeter-settings",     NULL,       NULL,       0,            1,     0,          0,              -1 },
+	{ "mpv",     NULL,       NULL,       0,            1,     0,          0,              -1 },
 	{ "st",      NULL,     NULL,           0,         0,          1,          -1,        -1 },
 	{ "Alacritty",      NULL,     NULL,           0,         0,          1,          -1,        -1 },
 	{ NULL,      NULL,     "Event Tester", 0,         1,          0,           1,        -1 }, /* xev */
