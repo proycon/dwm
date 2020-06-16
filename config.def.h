@@ -161,6 +161,9 @@ static Key keys[] = {
 	{ MODKEY,						XK_Escape, spawn, SHCMD("~/dotfiles/lock.sh") }, /* lock screen */
 	{ MODKEY|ShiftMask,				XK_Escape, spawn, SHCMD("~/dotfiles/suspend.sh") }, /* lock screen */
     { ALTKEY,                       XK_F4,  spawn, SHCMD("pkill -f notifyclient.py") }, /* restart notifyclient */
+	{ MODKEY,   	    			XK_slash, spawn, SHCMD("~/dotfiles/timetracker.sh") },
+	{ MODKEY|ShiftMask,    			XK_slash, spawn, SHCMD("~/dotfiles/timetracker.sh 15") },
+	{ MODKEY|ControlMask|ShiftMask, XK_slash, spawn, SHCMD("~/dotfiles/timetracker.sh 60") },
 	{ 0, XF86XK_AudioPrev,		spawn,		SHCMD("mpc prev") },
 	{ 0, XF86XK_AudioNext,		spawn,		SHCMD("mpc next") },
 	{ 0, XF86XK_AudioPause,		spawn,		SHCMD("mpc pause") },
