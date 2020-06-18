@@ -32,7 +32,8 @@ static const Rule rules[] = {
 	 *	WM_NAME(STRING) = title
 	 */
 	/* class      instance    title       tags mask     isfloating   isterminal  noswallow  monitor */
-	{ "Gimp",     NULL,       NULL,       0,            0,           0,          0,        -1 },
+	{ "Gimp",     NULL,       NULL,       1 << 4,       0,           0,          0,        -1 },
+	{ "Inkscape",     NULL,       NULL,       1 << 4,       0,           0,          0,        -1 },
 	{ "Firefox",  NULL,       NULL,       1 << 2,       0,           0,          0,        -1 },
 	{ "Menu",     NULL,       NULL,       0,            1,           0,          0,        -1 },
 	{ "Lxappearance",     NULL,       NULL,       0,            1,    0,          0,               -1 },
@@ -40,6 +41,25 @@ static const Rule rules[] = {
 	{ "mpv",     NULL,       NULL,       0,            1,     0,          0,              -1 },
 	{ "st",      NULL,     NULL,           0,         0,          1,          -1,        -1 },
 	{ "Alacritty",      NULL,     NULL,           0,         0,          1,          -1,        -1 },
+	{ "Alacritty",      NULL,     "mail",         1,         0,          1,          -1,        -1 },
+	{ "Alacritty",      NULL,     "newsboat",         1 << 5,         0,          1,          -1,        -1 },
+	{ "Alacritty",      NULL,     "vim",         1 << 1,         0,          1,          -1,        -1 },
+	{ "Alacritty",      NULL,     "mhysa",         1 << 3,         0,          1,          -1,        -1 },
+	{ "Alacritty",      NULL,     "rocinante",         1 << 3,         0,          1,          -1,        -1 },
+	{ "Alacritty",      NULL,     "mlp01",         1 << 7,         0,          1,          -1,        -1 },
+	{ "Alacritty",      NULL,     "mlp02",         1 << 7,         0,          1,          -1,        -1 },
+	{ "Alacritty",      NULL,     "mlp03",         1 << 7,         0,          1,          -1,        -1 },
+	{ "Alacritty",      NULL,     "mlp04",         1 << 7,         0,          1,          -1,        -1 },
+	{ "Alacritty",      NULL,     "mlp05",         1 << 7,         0,          1,          -1,        -1 },
+	{ "Alacritty",      NULL,     "mlp06",         1 << 7,         0,          1,          -1,        -1 },
+	{ "Alacritty",      NULL,     "mlp07",         1 << 7,         0,          1,          -1,        -1 },
+	{ "Alacritty",      NULL,     "mlp08",         1 << 7,         0,          1,          -1,        -1 },
+	{ "Alacritty",      NULL,     "mlp09",         1 << 7,         0,          1,          -1,        -1 },
+	{ "Alacritty",      NULL,     "mlp10",         1 << 7,         0,          1,          -1,        -1 },
+	{ "Alacritty",      NULL,     "mlp11",         1 << 7,         0,          1,          -1,        -1 },
+	{ "Alacritty",      NULL,     "mlp12",         1 << 7,         0,          1,          -1,        -1 },
+	{ "Alacritty",      NULL,     "anaproy",         1 << 7,         0,          1,          -1,        -1 },
+	{ "Alacritty",      NULL,     "anaproy2",         1 << 7,         0,          1,          -1,        -1 },
 	{ NULL,      NULL,     "Event Tester", 0,         1,          0,           1,        -1 }, /* xev */
 };
 
