@@ -33,7 +33,7 @@ static const Rule rules[] = {
 	 */
 	/* class      instance    title       tags mask     isfloating   isterminal  noswallow  monitor */
 	{ "Gimp",     NULL,       NULL,       0,            0,           0,          0,        -1 },
-	{ "Firefox",  NULL,       NULL,       1 << 8,       0,           0,          0,        -1 },
+	{ "Firefox",  NULL,       NULL,       1 << 2,       0,           0,          0,        -1 },
 	{ "Menu",     NULL,       NULL,       0,            1,           0,          0,        -1 },
 	{ "Lxappearance",     NULL,       NULL,       0,            1,    0,          0,               -1 },
 	{ "Lightdm-gtk-greeter-settings",     NULL,       NULL,       0,            1,     0,          0,              -1 },
@@ -137,26 +137,26 @@ static Key keys[] = {
 	TAGKEYS(                        XK_8,                      7)
 	TAGKEYS(                        XK_9,                      8)
 	{ MODKEY|ShiftMask,             XK_BackSpace,      quit,           {0} },
-    { ALTKEY,                       XK_F8, spawn, SHCMD("fcitx") },
-    { ALTKEY,                       XK_F9, spawn, SHCMD("killall fcitx || setxkbmap proylatin") },
-    { ALTKEY,                       XK_F10, spawn, SHCMD("killall fcitx || setxkbmap proyeo") },
-    { ALTKEY|ShiftMask,             XK_F10, spawn, SHCMD("killall fcitx || setxkbmap proyel") },
-    { ALTKEY,                       XK_F11, spawn, SHCMD("killall fcitx || setxkbmap proyru") },
-    { ALTKEY,                       XK_F12, spawn, SHCMD("killall fcitx || setxkbmap proyar") },
-    { ALTKEY|ShiftMask,             XK_F12, spawn, SHCMD("killall fcitx || setxkbmap proylogic") },
+    { ALTKEY,                       XK_F8, spawn, SHCMD("fcitx && play ~/dotfiles/media/key.wav") },
+    { ALTKEY,                       XK_F9, spawn, SHCMD("killall fcitx; setxkbmap proylatin && play ~/dotfiles/media/key.wav") },
+    { ALTKEY,                       XK_F10, spawn, SHCMD("killall fcitx; setxkbmap proyeo && play ~/dotfiles/media/key.wav") },
+    { ALTKEY|ShiftMask,             XK_F10, spawn, SHCMD("killall fcitx; setxkbmap proyel && play ~/dotfiles/media/key.wav") },
+    { ALTKEY,                       XK_F11, spawn, SHCMD("killall fcitx; setxkbmap proyru && play ~/dotfiles/media/key.wav") },
+    { ALTKEY,                       XK_F12, spawn, SHCMD("killall fcitx; setxkbmap proyar && play ~/dotfiles/media/key.wav") },
+    { ALTKEY|ShiftMask,             XK_F12, spawn, SHCMD("killall fcitx; setxkbmap proylogic && play ~/dotfiles/media/key.wav") },
 	{ MODKEY,						XK_F1, spawn, SHCMD("alacritty --working-directory ~ -t mail -e ssh -Y -A -t anaproy.nl ~/bin/tm_alot") },
 	{ MODKEY,						XK_F2, spawn, SHCMD("alacritty --working-directory ~ -t vim -e ~/bin/tm nvim") },
 	{ ALTKEY,						XK_F2, spawn, SHCMD("~/bin/lala") }, /* start music */
 	{ ALTKEY|ShiftMask,				XK_F2, spawn, SHCMD("killall mplayer; mpc stop") }, /* stop music */
 	{ MODKEY,						XK_F3, spawn, SHCMD("$BROWSER") },
 	{ ALTKEY,						XK_F5, spawn, SHCMD("~/dotfiles/emojiselect") }, /* select emoji */
-	{ MODKEY,						XK_F4, spawn, SHCMD("scrot") }, /* screenshot */
-	{ MODKEY|ShiftMask,				XK_F4, spawn, SHCMD("scrot --focused") }, /* screenshot */
+	{ MODKEY,						XK_F4, spawn, SHCMD("scrot && play ~/dotfiles/media/shutter.wav") }, /* screenshot */
+	{ MODKEY|ShiftMask,				XK_F4, spawn, SHCMD("scrot --focused && play ~/dotfiles/media/shutter.wav") }, /* screenshot */
 	{ MODKEY,						XK_F5, spawn, SHCMD("~/dotfiles/opensxiv.sh") }, /* gallery */
 	{ MODKEY|ShiftMask,				XK_F5, spawn, SHCMD("~/dotfiles/openinstagram.sh") }, /* instagram gallery */
 	{ MODKEY,						XK_F6, spawn, SHCMD("alacritty --working-directory ~ -t newsboat -e newsboat") }, /* RSS reader */
 	{ MODKEY,						XK_F7, spawn, SHCMD("alacritty --working-directory ~ -t ncmpcpp -e ncmpcpp") }, /* Music browser */
-	{ MODKEY,						XK_F8, spawn, SHCMD("picom -cC -z -r 3 -l 2 -t 2 -f") }, /* start compositor */
+	{ MODKEY,						XK_F8, spawn, SHCMD("picom -f") }, /* start compositor */
 	{ MODKEY|ShiftMask,				XK_F8, spawn, SHCMD("killall picom") }, /* stop compositor */
 	{ MODKEY,						XK_Escape, spawn, SHCMD("~/dotfiles/lock.sh") }, /* lock screen */
 	{ MODKEY|ShiftMask,				XK_Escape, spawn, SHCMD("~/dotfiles/suspend.sh") }, /* lock screen */
