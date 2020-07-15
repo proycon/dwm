@@ -40,26 +40,27 @@ static const Rule rules[] = {
 	{ "Lightdm-gtk-greeter-settings",     NULL,       NULL,       0,            1,     0,          0,              -1 },
 	{ "mpv",     NULL,       NULL,       0,            1,     0,          0,              -1 },
 	{ "st",      NULL,     NULL,           0,         0,          1,          -1,        -1 },
+	{ "kitty",      NULL,     NULL,           0,         0,          1,          -1,        -1 },
 	{ "Alacritty",      NULL,     NULL,           0,         0,          1,          -1,        -1 },
-	{ "Alacritty",      NULL,     "mail",         1,         0,          1,          -1,        -1 },
-	{ "Alacritty",      NULL,     "newsboat",         1 << 5,         0,          1,          -1,        -1 },
-	{ "Alacritty",      NULL,     "vim",         1 << 1,         0,          1,          -1,        -1 },
-	{ "Alacritty",      NULL,     "mhysa",         1 << 3,         0,          1,          -1,        -1 },
-	{ "Alacritty",      NULL,     "rocinante",         1 << 3,         0,          1,          -1,        -1 },
-	{ "Alacritty",      NULL,     "mlp01",         1 << 7,         0,          1,          -1,        -1 },
-	{ "Alacritty",      NULL,     "mlp02",         1 << 7,         0,          1,          -1,        -1 },
-	{ "Alacritty",      NULL,     "mlp03",         1 << 7,         0,          1,          -1,        -1 },
-	{ "Alacritty",      NULL,     "mlp04",         1 << 7,         0,          1,          -1,        -1 },
-	{ "Alacritty",      NULL,     "mlp05",         1 << 7,         0,          1,          -1,        -1 },
-	{ "Alacritty",      NULL,     "mlp06",         1 << 7,         0,          1,          -1,        -1 },
-	{ "Alacritty",      NULL,     "mlp07",         1 << 7,         0,          1,          -1,        -1 },
-	{ "Alacritty",      NULL,     "mlp08",         1 << 7,         0,          1,          -1,        -1 },
-	{ "Alacritty",      NULL,     "mlp09",         1 << 7,         0,          1,          -1,        -1 },
-	{ "Alacritty",      NULL,     "mlp10",         1 << 7,         0,          1,          -1,        -1 },
-	{ "Alacritty",      NULL,     "mlp11",         1 << 7,         0,          1,          -1,        -1 },
-	{ "Alacritty",      NULL,     "mlp12",         1 << 7,         0,          1,          -1,        -1 },
-	{ "Alacritty",      NULL,     "anaproy",         1 << 7,         0,          1,          -1,        -1 },
-	{ "Alacritty",      NULL,     "anaproy2",         1 << 7,         0,          1,          -1,        -1 },
+	{ "st",      NULL,     "mail",         1,         0,          1,          -1,        -1 },
+	{ "st",      NULL,     "newsboat",         1 << 5,         0,          1,          -1,        -1 },
+	{ "st",      NULL,     "vim",         1 << 1,         0,          1,          -1,        -1 },
+	{ "st",      NULL,     "mhysa",         1 << 3,         0,          1,          -1,        -1 },
+	{ "st",      NULL,     "rocinante",         1 << 3,         0,          1,          -1,        -1 },
+	{ "st",      NULL,     "mlp01",         1 << 7,         0,          1,          -1,        -1 },
+	{ "st",      NULL,     "mlp02",         1 << 7,         0,          1,          -1,        -1 },
+	{ "st",      NULL,     "mlp03",         1 << 7,         0,          1,          -1,        -1 },
+	{ "st",      NULL,     "mlp04",         1 << 7,         0,          1,          -1,        -1 },
+	{ "st",      NULL,     "mlp05",         1 << 7,         0,          1,          -1,        -1 },
+	{ "st",      NULL,     "mlp06",         1 << 7,         0,          1,          -1,        -1 },
+	{ "st",      NULL,     "mlp07",         1 << 7,         0,          1,          -1,        -1 },
+	{ "st",      NULL,     "mlp08",         1 << 7,         0,          1,          -1,        -1 },
+	{ "st",      NULL,     "mlp09",         1 << 7,         0,          1,          -1,        -1 },
+	{ "st",      NULL,     "mlp10",         1 << 7,         0,          1,          -1,        -1 },
+	{ "st",      NULL,     "mlp11",         1 << 7,         0,          1,          -1,        -1 },
+	{ "st",      NULL,     "mlp12",         1 << 7,         0,          1,          -1,        -1 },
+	{ "st",      NULL,     "anaproy",         1 << 7,         0,          1,          -1,        -1 },
+	{ "st",      NULL,     "anaproy2",         1 << 7,         0,          1,          -1,        -1 },
 	{ NULL,      NULL,     "Event Tester", 0,         1,          0,           1,        -1 }, /* xev */
 };
 
@@ -104,7 +105,7 @@ static const Layout layouts[] = {
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
 static const char *dmenucmd[] = { "rofi", "-font", "Source Code Pro for Powerline 16", "-combi-modi", "window,drun,run", "-show", "combi", "-modi","combi", NULL };
-static const char *termcmd[]  = { "alacritty", NULL };
+static const char *termcmd[]  = { "st", NULL };
 static const char scratchpadname[] = "scratchpad";
 static const char *scratchpadcmd[] = { "st","-t",scratchpadname,"-g","120x34","-e","/home/proycon/bin/tm",scratchpadname, NULL };
 
@@ -157,15 +158,15 @@ static Key keys[] = {
 	TAGKEYS(                        XK_8,                      7)
 	TAGKEYS(                        XK_9,                      8)
 	{ MODKEY|ShiftMask,             XK_BackSpace,      quit,           {0} },
-    { ALTKEY,                       XK_F8, spawn, SHCMD("fcitx && play ~/dotfiles/media/key.wav") },
+    { ALTKEY,                       XK_F8, spawn, SHCMD("fcitx -dr && play ~/dotfiles/media/key.wav") },
     { ALTKEY,                       XK_F9, spawn, SHCMD("killall fcitx; setxkbmap proylatin && play ~/dotfiles/media/key.wav") },
     { ALTKEY,                       XK_F10, spawn, SHCMD("killall fcitx; setxkbmap proyeo && play ~/dotfiles/media/key.wav") },
     { ALTKEY|ShiftMask,             XK_F10, spawn, SHCMD("killall fcitx; setxkbmap proyel && play ~/dotfiles/media/key.wav") },
     { ALTKEY,                       XK_F11, spawn, SHCMD("killall fcitx; setxkbmap proyru && play ~/dotfiles/media/key.wav") },
     { ALTKEY,                       XK_F12, spawn, SHCMD("killall fcitx; setxkbmap proyar && play ~/dotfiles/media/key.wav") },
     { ALTKEY|ShiftMask,             XK_F12, spawn, SHCMD("killall fcitx; setxkbmap proylogic && play ~/dotfiles/media/key.wav") },
-	{ MODKEY,						XK_F1, spawn, SHCMD("alacritty --working-directory ~ -t mail -e ssh -Y -A -t anaproy.nl ~/bin/tm_alot") },
-	{ MODKEY,						XK_F2, spawn, SHCMD("alacritty --working-directory ~ -t vim -e ~/bin/tm nvim") },
+	{ MODKEY,						XK_F1, spawn, SHCMD("st -T mail ssh -Y -A -t anaproy.nl ~/bin/tm_alot") },
+	{ MODKEY,						XK_F2, spawn, SHCMD("st -T vim ~/bin/tm nvim") },
 	{ ALTKEY,						XK_F2, spawn, SHCMD("~/bin/lala") }, /* start music */
 	{ ALTKEY|ShiftMask,				XK_F2, spawn, SHCMD("killall mplayer; mpc stop") }, /* stop music */
 	{ MODKEY,						XK_F3, spawn, SHCMD("~/dotfiles/homecommand.sh") },
@@ -175,8 +176,8 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,				XK_F4, spawn, SHCMD("scrot --focused && play ~/dotfiles/media/shutter.wav") }, /* screenshot */
 	{ MODKEY,						XK_F5, spawn, SHCMD("~/dotfiles/opensxiv.sh") }, /* gallery */
 	{ MODKEY|ShiftMask,				XK_F5, spawn, SHCMD("~/dotfiles/openinstagram.sh") }, /* instagram gallery */
-	{ MODKEY,						XK_F6, spawn, SHCMD("alacritty --working-directory ~ -t newsboat -e newsboat") }, /* RSS reader */
-	{ MODKEY,						XK_F7, spawn, SHCMD("alacritty --working-directory ~ -t ncmpcpp -e ncmpcpp") }, /* Music browser */
+	{ MODKEY,						XK_F6, spawn, SHCMD("st -T newsboat newsboat") }, /* RSS reader */
+	{ MODKEY,						XK_F7, spawn, SHCMD("st -T ncmpcpp ncmpcpp") }, /* Music browser */
 	{ MODKEY,						XK_F8, spawn, SHCMD("picom -f") }, /* start compositor */
 	{ MODKEY|ShiftMask,				XK_F8, spawn, SHCMD("killall picom") }, /* stop compositor */
 	{ MODKEY,						XK_Escape, spawn, SHCMD("~/dotfiles/lock.sh") }, /* lock screen */
@@ -192,7 +193,7 @@ static Key keys[] = {
 	{ 0, XF86XK_AudioStop,		spawn,		SHCMD("mpc stop") },
 	{ 0, XF86XK_AudioRewind,	spawn,		SHCMD("mpc seek -10") },
 	{ 0, XF86XK_AudioForward,	spawn,		SHCMD("mpc seek +10") },
-	{ 0, XF86XK_AudioMedia,		spawn,		SHCMD("alacritty --working-directory ~ -t ncmpcpp -e ncmpcpp") },
+	{ 0, XF86XK_AudioMedia,		spawn,		SHCMD("st -T ncmpcpp ncmpcpp") },
 	{ 0, XF86XK_AudioRaiseVolume,	spawn,		SHCMD("pamixer --allow-boost -i 5") },
 	{ 0, XF86XK_AudioLowerVolume,	spawn,		SHCMD("pamixer --allow-boost -d 5") },
 	{ 0, XF86XK_AudioMute,	spawn,		SHCMD("pamixer -t") },
