@@ -157,13 +157,13 @@ static Key keys[] = {
 	TAGKEYS(                        XK_8,                      7)
 	TAGKEYS(                        XK_9,                      8)
 	{ MODKEY|ShiftMask,             XK_BackSpace,      quit,           {0} },
-    { ALTKEY,                       XK_F8, spawn, SHCMD("fcitx && play ~/dotfiles/media/key.wav") },
-    { ALTKEY,                       XK_F9, spawn, SHCMD("killall fcitx; setxkbmap proylatin && play ~/dotfiles/media/key.wav") },
-    { ALTKEY,                       XK_F10, spawn, SHCMD("killall fcitx; setxkbmap proyeo && play ~/dotfiles/media/key.wav") },
-    { ALTKEY|ShiftMask,             XK_F10, spawn, SHCMD("killall fcitx; setxkbmap proyel && play ~/dotfiles/media/key.wav") },
-    { ALTKEY,                       XK_F11, spawn, SHCMD("killall fcitx; setxkbmap proyru && play ~/dotfiles/media/key.wav") },
-    { ALTKEY,                       XK_F12, spawn, SHCMD("killall fcitx; setxkbmap proyar && play ~/dotfiles/media/key.wav") },
-    { ALTKEY|ShiftMask,             XK_F12, spawn, SHCMD("killall fcitx; setxkbmap proylogic && play ~/dotfiles/media/key.wav") },
+    { ALTKEY,                       XK_F8, spawn, SHCMD("ibus-daemon -d && play ~/dotfiles/media/key.wav") },
+    { ALTKEY,                       XK_F9, spawn, SHCMD("killall ibus-daemon; setxkbmap proylatin && play ~/dotfiles/media/key.wav") },
+    { ALTKEY,                       XK_F10, spawn, SHCMD("killall ibus-daemon; setxkbmap proyeo && play ~/dotfiles/media/key.wav") },
+    { ALTKEY|ShiftMask,             XK_F10, spawn, SHCMD("killall ibus-daemon; setxkbmap proyel && play ~/dotfiles/media/key.wav") },
+    { ALTKEY,                       XK_F11, spawn, SHCMD("killall ibus-daemon; setxkbmap proyru && play ~/dotfiles/media/key.wav") },
+    { ALTKEY,                       XK_F12, spawn, SHCMD("killall ibus-daemon; setxkbmap proyar && play ~/dotfiles/media/key.wav") },
+    { ALTKEY|ShiftMask,             XK_F12, spawn, SHCMD("killall ibus-daemon; setxkbmap proylogic && play ~/dotfiles/media/key.wav") },
 	{ MODKEY,						XK_F1, spawn, SHCMD("alacritty --working-directory ~ -t mail -e ssh -Y -A -t anaproy.nl ~/bin/tm_alot") },
 	{ MODKEY,						XK_F2, spawn, SHCMD("alacritty --working-directory ~ -t vim -e ~/bin/tm nvim") },
 	{ ALTKEY,						XK_F2, spawn, SHCMD("~/bin/lala") }, /* start music */
