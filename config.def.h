@@ -181,7 +181,6 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,				XK_F8, spawn, SHCMD("killall picom") }, /* stop compositor */
 	{ MODKEY,						XK_Escape, spawn, SHCMD("~/dotfiles/lock.sh") }, /* lock screen */
 	{ MODKEY|ShiftMask,				XK_Escape, spawn, SHCMD("~/dotfiles/suspend.sh") }, /* lock screen */
-    { ALTKEY,                       XK_F4,  spawn, SHCMD("pkill -f notifyclient.sh") }, /* restart notifyclient */
 	{ MODKEY,   	    			XK_slash, spawn, SHCMD("~/dotfiles/timetracker.sh") },
 	{ MODKEY|ShiftMask,    			XK_slash, spawn, SHCMD("~/dotfiles/timetracker.sh 15") },
 	{ MODKEY|ControlMask|ShiftMask, XK_slash, spawn, SHCMD("~/dotfiles/timetracker.sh 60") },
@@ -193,14 +192,14 @@ static Key keys[] = {
 	{ 0, XF86XK_AudioRewind,	spawn,		SHCMD("mpc seek -10") },
 	{ 0, XF86XK_AudioForward,	spawn,		SHCMD("mpc seek +10") },
 	{ 0, XF86XK_AudioMedia,		spawn,		SHCMD("alacritty --working-directory ~ -t ncmpcpp -e ncmpcpp") },
-	{ 0, XF86XK_AudioRaiseVolume,	spawn,		SHCMD("pamixer --allow-boost -i 5") },
-	{ 0, XF86XK_AudioLowerVolume,	spawn,		SHCMD("pamixer --allow-boost -d 5") },
-	{ 0, XF86XK_AudioMute,	spawn,		SHCMD("pamixer -t") },
+	{ 0, XF86XK_AudioRaiseVolume,	spawn,		SHCMD("pamixer --allow-boost -i 5 && play ~/dotfiles/media/key.wav") },
+	{ 0, XF86XK_AudioLowerVolume,	spawn,		SHCMD("pamixer --allow-boost -d 5 && play ~/dotfiles/media/key.wav") },
+	{ 0, XF86XK_AudioMute,	spawn,		SHCMD("pamixer -t && play ~/dotfiles/media/key.wav") },
 	{ 0, XF86XK_MonBrightnessDown,	spawn,		SHCMD("~/dotfiles/bright_down.sh") },
 	{ 0, XF86XK_MonBrightnessUp,	spawn,		SHCMD("~/dotfiles/bright_up.sh") },
-	{ MODKEY, XK_F12,	spawn,		SHCMD("pamixer --allow-boost -i 5") },
-	{ MODKEY, XK_F11,	spawn,		SHCMD("pamixer --allow-boost -d 5") },
-	{ MODKEY, XK_F10,	spawn,		SHCMD("pamixer -t") },
+	{ MODKEY, XK_F12,	spawn,		SHCMD("pamixer --allow-boost -i 5 && play ~/dotfiles/media/key.wav") },
+	{ MODKEY, XK_F11,	spawn,		SHCMD("pamixer --allow-boost -d 5 && play ~/dotfiles/media/key.wav") },
+	{ MODKEY, XK_F10,	spawn,		SHCMD("pamixer -t && play ~/dotfiles/media/key.wav") },
 	{ MODKEY, XK_F9,	spawn,		SHCMD("mpc next") },
 };
 
