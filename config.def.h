@@ -175,6 +175,8 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,				XK_F5, spawn, SHCMD("~/dotfiles/openinstagram.sh") }, /* instagram gallery */
 	{ MODKEY,						XK_F6, spawn, SHCMD("alacritty --working-directory ~ -t newsboat -e newsboat") }, /* RSS reader */
 	{ MODKEY,						XK_F7, spawn, SHCMD("alacritty --working-directory ~ -t ncmpcpp -e ncmpcpp") }, /* Music browser */
+	{ MODKEY,                       XK_y, spawn, SHCMD("alacritty --working-directory ~ -t youtube -e ytfzf -t") },
+	{ MODKEY|ShiftMask,             XK_y, spawn, SHCMD("alacritty --working-directory ~ -t youtube -e ytfzf -t -H") },
 	{ MODKEY,						XK_F8, spawn, SHCMD("picom -f") }, /* start compositor */
 	{ MODKEY|ShiftMask,				XK_F8, spawn, SHCMD("killall picom") }, /* stop compositor */
 	{ MODKEY,						XK_Escape, spawn, SHCMD("~/dotfiles/lock.sh") }, /* lock screen */
