@@ -165,7 +165,7 @@ static Key keys[] = {
 	{ MODKEY,						XK_F1, spawn, SHCMD("alacritty --working-directory ~ -t mail -e ssh -Y -A -t anaproy.nl ~/bin/tm_alot") },
 	{ MODKEY,						XK_F2, spawn, SHCMD("alacritty --working-directory ~ -t vim -e ~/bin/tm nvim") },
 	{ ALTKEY,						XK_F2, spawn, SHCMD("~/bin/lala") }, /* start music */
-	{ ALTKEY|ShiftMask,				XK_F2, spawn, SHCMD("killall mplayer; mpc stop") }, /* stop music */
+	{ ALTKEY|ShiftMask,				XK_F2, spawn, SHCMD("killall snapclient; mpc stop") }, /* stop music */
 	{ MODKEY,						XK_F3, spawn, SHCMD("~/dotfiles/homecommand.sh") },
 	{ ALTKEY,						XK_F3, spawn, SHCMD("~/dotfiles/homecommand.sh mute") },
 	{ ALTKEY,						XK_F5, spawn, SHCMD("~/dotfiles/emojiselect") }, /* select emoji */
@@ -185,6 +185,8 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,    			XK_slash, spawn, SHCMD("~/dotfiles/timetracker.sh 15") },
 	{ MODKEY|ControlMask|ShiftMask, XK_slash, spawn, SHCMD("~/dotfiles/timetracker.sh 60") },
 	{ MODKEY,						XK_w, spawn, SHCMD("~/dotfiles/buku-dmenu") },
+	{ MODKEY,						XK_j, spawn, SHCMD("~/dotfiles/dmenu-files.sh /nettmp -t") },
+	{ MODKEY,						XK_k, spawn, SHCMD("~/dotfiles/dmenu-files.sh /home/proycon -t") },
 	{ 0, XF86XK_AudioPrev,		spawn,		SHCMD("mpc prev") },
 	{ 0, XF86XK_AudioNext,		spawn,		SHCMD("mpc next") },
 	{ 0, XF86XK_AudioPause,		spawn,		SHCMD("mpc pause") },
