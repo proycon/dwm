@@ -17,10 +17,11 @@ static const char col_gray2[]       = "#444444";
 static const char col_gray3[]       = "#a89984";
 static const char col_gray4[]       = "#eeeeee";
 static const char col_cyan[]        = "#4d6e4e";
+static const char col_activeborder[]      = "#8fb1a4";
 static const char *colors[][3]      = {
 	/*               fg         bg         border   */
 	[SchemeNorm] = { col_gray3, col_gray1, col_gray2 },
-	[SchemeSel]  = { col_gray1, col_cyan,  col_cyan  },
+	[SchemeSel]  = { col_gray1, col_cyan,  col_activeborder  },
 };
 
 /* tagging */
@@ -127,6 +128,8 @@ static Key keys[] = {
 	{ MODKEY,                       XK_t,      setlayout,      {.v = &layouts[0]} },
 	{ MODKEY,                       XK_f,      setlayout,      {.v = &layouts[1]} },
 	{ MODKEY,                       XK_m,      setlayout,      {.v = &layouts[2]} },
+	{ MODKEY,                       XK_z,      focusmon,        {.i = 0 } },
+	{ MODKEY,                       XK_x,      focusmon,        {.i = 1 } },
 	{ MODKEY|ControlMask,		XK_comma,  cyclelayout,    {.i = -1 } },
 	{ MODKEY|ControlMask,           XK_period, cyclelayout,    {.i = +1 } },
 	{ MODKEY,                       XK_apostrophe,  cyclelayout,      {0} },
@@ -137,10 +140,10 @@ static Key keys[] = {
 	{ MODKEY,                       XK_period, focusmon,       {.i = +1 } },
 	{ MODKEY|ShiftMask,             XK_comma,  tagmon,         {.i = -1 } },
 	{ MODKEY|ShiftMask,             XK_period, tagmon,         {.i = +1 } },
-	{ MODKEY,                       XK_minus,  focusmon,       {.i = -1 } },
-	{ MODKEY,                       XK_equal, focusmon,       {.i = +1 } },
-	{ MODKEY|ShiftMask,             XK_minus,  tagmon,       {.i = -1 } },
-	{ MODKEY|ShiftMask,             XK_equal, tagmon,       {.i = +1 } },
+	{ MODKEY,                       XK_minus,  focusmon,       {.i = 0 } },
+	{ MODKEY,                       XK_equal, focusmon,       {.i = 1 } },
+	{ MODKEY|ShiftMask,             XK_minus,  tagmon,       {.i = 0 } },
+	{ MODKEY|ShiftMask,             XK_equal, tagmon,       {.i = 1 } },
 	TAGKEYS(                        XK_1,                      0)
 	TAGKEYS(                        XK_2,                      1)
 	TAGKEYS(                        XK_3,                      2)
