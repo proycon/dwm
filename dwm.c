@@ -265,6 +265,7 @@ static int stackpos(const Arg *arg);
 static Monitor *systraytomon(Monitor *m);
 static void tag(const Arg *arg);
 static void tagmon(const Arg *arg);
+static void tagmonnum(const Arg *arg);
 static void tile(Monitor *);
 static void togglebar(const Arg *arg);
 static void togglefloating(const Arg *arg);
@@ -2125,6 +2126,14 @@ tagmon(const Arg *arg)
 	if (!selmon->sel || !mons->next)
 		return;
 	sendmon(selmon->sel, dirtomon(arg->i), 1);
+}
+
+void
+tagmonnum(const Arg *arg)
+{
+	if (!selmon->sel || !mons->next)
+		return;
+	sendmon(selmon->sel, idxtomon(arg->i), 1);
 }
 
 void

@@ -132,6 +132,8 @@ static Key keys[] = {
 	{ MODKEY,                       XK_m,      setlayout,      {.v = &layouts[2]} },
 	{ MODKEY,                       XK_z,      focusmonnum,        {.i = 1 } },
 	{ MODKEY,                       XK_x,      focusmonnum,        {.i = 0 } },
+	{ MODKEY|ShiftMask,             XK_z,      tagmonnum,        {.i = 1 } },
+	{ MODKEY|ShiftMask,             XK_x,      tagmonnum,        {.i = 0 } },
 	{ MODKEY|ControlMask,		XK_comma,  cyclelayout,    {.i = -1 } },
 	{ MODKEY|ControlMask,           XK_period, cyclelayout,    {.i = +1 } },
 	{ MODKEY,                       XK_apostrophe,  cyclelayout,      {0} },
