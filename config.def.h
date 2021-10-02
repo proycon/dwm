@@ -25,7 +25,8 @@ static const char *colors[][3]      = {
 };
 
 /* tagging */
-static const char *tags[] = { "1:", "2:", "3:", "4:", "5:", "6", "7", "8:", "9" };
+static const char *tags[] = { "1:", "2:", "3:", "4:", "5:", "6", "7", "8:", "9", "10: " };
+static const int permontag[] = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 };
 
 static const Rule rules[] = {
 	/* xprop(1):
@@ -128,8 +129,8 @@ static Key keys[] = {
 	{ MODKEY,                       XK_t,      setlayout,      {.v = &layouts[0]} },
 	{ MODKEY,                       XK_f,      setlayout,      {.v = &layouts[1]} },
 	{ MODKEY,                       XK_m,      setlayout,      {.v = &layouts[2]} },
-	{ MODKEY,                       XK_z,      focusmon,        {.i = 0 } },
-	{ MODKEY,                       XK_x,      focusmon,        {.i = 1 } },
+	{ MODKEY,                       XK_z,      focusmonnum,        {.i = 1 } },
+	{ MODKEY,                       XK_x,      focusmonnum,        {.i = 0 } },
 	{ MODKEY|ControlMask,		XK_comma,  cyclelayout,    {.i = -1 } },
 	{ MODKEY|ControlMask,           XK_period, cyclelayout,    {.i = +1 } },
 	{ MODKEY,                       XK_apostrophe,  cyclelayout,      {0} },
@@ -153,6 +154,7 @@ static Key keys[] = {
 	TAGKEYS(                        XK_7,                      6)
 	TAGKEYS(                        XK_8,                      7)
 	TAGKEYS(                        XK_9,                      8)
+	TAGKEYS(                        XK_0,                      9)
 	{ MODKEY|ShiftMask,             XK_BackSpace,      quit,           {0} },
     { ALTKEY,                       XK_F8, spawn, SHCMD("fcitx && play ~/dotfiles/media/key.wav") },
     { ALTKEY,                       XK_F9, spawn, SHCMD("killall fcitx; setxkbmap proylatin && play ~/dotfiles/media/key.wav") },

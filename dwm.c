@@ -151,6 +151,7 @@ struct Monitor {
 	unsigned int seltags;
 	unsigned int sellt;
 	unsigned int tagset[2];
+	unsigned int availabletags;
 	int showbar;
 	int topbar;
 	Client *clients;
@@ -199,12 +200,13 @@ static void clientmessage(XEvent *e);
 static void configure(Client *c);
 static void configurenotify(XEvent *e);
 static void configurerequest(XEvent *e);
-static Monitor *createmon(void);
+static Monitor *createmon(int num);
 static void cyclelayout(const Arg *arg);
 static void destroynotify(XEvent *e);
 static void detach(Client *c);
 static void detachstack(Client *c);
 static Monitor *dirtomon(int dir);
+static Monitor *idxtomon(int idx);
 static void drawbar(Monitor *m);
 static void drawbars(void);
 static void enternotify(XEvent *e);
@@ -212,6 +214,7 @@ static void expose(XEvent *e);
 static void focus(Client *c);
 static void focusin(XEvent *e);
 static void focusmon(const Arg *arg);
+static void focusmonnum(const Arg *arg);
 static void focusstack(const Arg *arg);
 static Atom getatomprop(Client *c, Atom prop);
 static int getrootptr(int *x, int *y);
@@ -245,7 +248,7 @@ static void restack(Monitor *m);
 static void run(void);
 static void scan(void);
 static int sendevent(Window w, Atom proto, int m, long d0, long d1, long d2, long d3, long d4);
-static void sendmon(Client *c, Monitor *m);
+static void sendmon(Client *c, Monitor *m, int assigntags);
 static void setclientstate(Client *c, long state);
 static void setfocus(Client *c);
 static void setfullscreen(Client *c, int fullscreen);
@@ -784,13 +787,13 @@ configurerequest(XEvent *e)
 }
 
 Monitor *
-createmon(void)
+createmon(int num)
 {
 	Monitor *m;
 	unsigned int i;
 
 	m = ecalloc(1, sizeof(Monitor));
-	m->tagset[0] = m->tagset[1] = 1;
+	m->num = num;
 	m->mfact = mfact;
 	m->nmaster = nmaster;
 	m->showbar = showbar;
@@ -799,7 +802,7 @@ createmon(void)
 	m->lt[1] = &layouts[1 % LENGTH(layouts)];
 	strncpy(m->ltsymbol, layouts[0].symbol, sizeof m->ltsymbol);
 	m->pertag = ecalloc(1, sizeof(Pertag));
-	m->pertag->curtag = m->pertag->prevtag = 1;
+	m->availabletags = 0;
 
 	for (i = 0; i <= LENGTH(tags); i++) {
 		m->pertag->nmasters[i] = m->nmaster;
@@ -808,9 +811,20 @@ createmon(void)
 		m->pertag->ltidxs[i][0] = m->lt[0];
 		m->pertag->ltidxs[i][1] = m->lt[1];
 		m->pertag->sellts[i] = m->sellt;
-
 		m->pertag->showbars[i] = m->showbar;
+
 	}
+
+	int do_init = 1;
+	for (i = 0; i < LENGTH(tags); i++)
+		if (permontag[i] == m->num) {
+			m->availabletags |= 1 << i;
+			if (do_init) {
+				m->tagset[0] = m->tagset[1] = 1 << i;
+				m->pertag->curtag = m->pertag->prevtag = i;
+				do_init = 0;
+			}
+		}
 
 	return m;
 }
@@ -887,6 +901,19 @@ dirtomon(int dir)
 	return m;
 }
 
+Monitor *
+idxtomon(int idx)
+{
+	Monitor *m;
+
+	for (m = mons; m; m = m->next) {
+		if (m->num == idx)
+			return m;
+	}
+
+	return mons; //fallback
+}
+
 void
 drawbar(Monitor *m)
 {
@@ -919,6 +946,10 @@ drawbar(Monitor *m)
 		/* do not draw vacant tags */
 		if (!(occ & 1 << i || m->tagset[m->seltags] & 1 << i))
 		continue;
+
+		/* do not draw tags that are not available for the monitor */
+		if (!(m->availabletags & 1 << i))
+			continue;
 
 		w = TEXTW(tags[i]);
 		drw_setscheme(drw, scheme[m->tagset[m->seltags] & 1 << i && m == selmon ? SchemeSel : SchemeNorm]);
@@ -1053,7 +1084,22 @@ focusmon(const Arg *arg)
 	if ((m = dirtomon(arg->i)) == selmon)
 		return;
 	unfocus(selmon->sel, 0);
-	XWarpPointer(dpy, None, m->barwin, 0, 0, 0, 0, m->mw / 2, m->mh / 2);
+	XWarpPointer(dpy, None, m->barwin, 0, 0, 0, 0, m->mw / 2, 0);
+	selmon = m;
+	focus(NULL);
+}
+
+void
+focusmonnum(const Arg *arg)
+{
+	Monitor *m;
+
+	if (!mons->next)
+		return;
+	if ((m = idxtomon(arg->i)) == selmon)
+		return;
+	unfocus(selmon->sel, 0);
+	XWarpPointer(dpy, None, m->barwin, 0, 0, 0, 0, m->mw / 2, 0);
 	selmon = m;
 	focus(NULL);
 }
@@ -1438,7 +1484,7 @@ movemouse(const Arg *arg)
 	} while (ev.type != ButtonRelease);
 	XUngrabPointer(dpy, CurrentTime);
 	if ((m = recttomon(c->x, c->y, c->w, c->h)) != selmon) {
-		sendmon(c, m);
+		sendmon(c, m, 1);
 		selmon = m;
 		focus(NULL);
 	}
@@ -1654,7 +1700,7 @@ resizemouse(const Arg *arg)
 	XUngrabPointer(dpy, CurrentTime);
 	while (XCheckMaskEvent(dpy, EnterWindowMask, &ev));
 	if ((m = recttomon(c->x, c->y, c->w, c->h)) != selmon) {
-		sendmon(c, m);
+		sendmon(c, m, 1);
 		selmon = m;
 		focus(NULL);
 	}
@@ -1742,7 +1788,7 @@ scan(void)
 }
 
 void
-sendmon(Client *c, Monitor *m)
+sendmon(Client *c, Monitor *m, int assigntags)
 {
 	if (c->mon == m)
 		return;
@@ -1750,7 +1796,7 @@ sendmon(Client *c, Monitor *m)
 	detach(c);
 	detachstack(c);
 	c->mon = m;
-	c->tags = m->tagset[m->seltags]; /* assign tags of target monitor */
+	if (assigntags != 0) c->tags = m->tagset[m->seltags]; /* assign tags of target monitor */
 	attachbottom(c);
 	attachstack(c);
 	focus(NULL);
@@ -2040,7 +2086,21 @@ void
 tag(const Arg *arg)
 {
 	if (selmon->sel && arg->ui & TAGMASK) {
-		selmon->sel->tags = arg->ui & TAGMASK;
+		if (!(arg->ui & selmon->availabletags)) {
+			//selected tag is not available on the selected monitor,
+			//move to correct monitor
+			int i;
+			for (i = 0; i < LENGTH(tags); i++) {
+				if ((1 << i) & arg->ui) {
+					//find the monitor for the (first occ. of the) tag
+					selmon->sel->tags = arg->ui & TAGMASK;
+					sendmon(selmon->sel, idxtomon(permontag[i]), 0);
+					break;
+				}
+			}
+		} else {
+			selmon->sel->tags = arg->ui & TAGMASK;
+		}
 		focus(NULL);
 		arrange(selmon);
 	}
@@ -2051,7 +2111,7 @@ tagmon(const Arg *arg)
 {
 	if (!selmon->sel || !mons->next)
 		return;
-	sendmon(selmon->sel, dirtomon(arg->i));
+	sendmon(selmon->sel, dirtomon(arg->i), 1);
 }
 
 void
@@ -2153,7 +2213,7 @@ toggletag(const Arg *arg)
 	if (!selmon->sel)
 		return;
 	newtags = selmon->sel->tags ^ (arg->ui & TAGMASK);
-	if (newtags) {
+	if (newtags & selmon->availabletags) {
 		selmon->sel->tags = newtags;
 		focus(NULL);
 		arrange(selmon);
@@ -2166,7 +2226,7 @@ toggleview(const Arg *arg)
 	unsigned int newtagset = selmon->tagset[selmon->seltags] ^ (arg->ui & TAGMASK);
 	int i;
 
-	if (newtagset) {
+	if (newtagset & selmon->availabletags) {
 		selmon->tagset[selmon->seltags] = newtagset;
 
 		if (newtagset == ~0) {
@@ -2351,9 +2411,9 @@ updategeom(void)
 			for (i = 0; i < (nn - n); i++) {
 				for (m = mons; m && m->next; m = m->next);
 				if (m)
-					m->next = createmon();
+					m->next = createmon(i);
 				else
-					mons = createmon();
+					mons = createmon(i);
 			}
 			for (i = 0, m = mons; i < nn && m; m = m->next, i++)
 				if (i >= n
@@ -2389,7 +2449,7 @@ updategeom(void)
 #endif /* XINERAMA */
 	{ /* default monitor setup */
 		if (!mons)
-			mons = createmon();
+			mons = createmon(0);
 		if (mons->mw != sw || mons->mh != sh) {
 			dirty = 1;
 			mons->mw = mons->ww = sw;
@@ -2629,16 +2689,39 @@ updatewmhints(Client *c)
 	}
 }
 
+
+int
+switchmonitorfortag(unsigned int tagmask) {
+	if (selmon->sel) unfocus(selmon->sel, 0);
+	int i;
+	int found = 0;
+	for (i = 0; i < LENGTH(tags); i++) {
+		if ((1 << i) & tagmask) {
+			//find the monitor for the (first occ. of the) tag
+			selmon = idxtomon(permontag[i]);
+			found = 1;
+			break;
+		}
+	}
+	return found;
+}
+
 void
 view(const Arg *arg)
 {
 	int i;
 	unsigned int tmptag;
+	int switched_monitor = 0;
 
 	if ((arg->ui & TAGMASK) == selmon->tagset[selmon->seltags])
 		return;
-	selmon->seltags ^= 1; /* toggle sel tagset */
 	if (arg->ui & TAGMASK) {
+		if (!(arg->ui & selmon->availabletags)) {
+			//switch to monitor that owns the tag
+			switched_monitor = switchmonitorfortag(arg->ui);
+		}
+		selmon->seltags ^= 1; /* toggle sel tagset (1 or 0) */
+
 		selmon->tagset[selmon->seltags] = arg->ui & TAGMASK;
 		selmon->pertag->prevtag = selmon->pertag->curtag;
 
@@ -2649,6 +2732,7 @@ view(const Arg *arg)
 			selmon->pertag->curtag = i + 1;
 		}
 	} else {
+		selmon->seltags ^= 1; /* toggle sel tagset (1 or 0) */
 		tmptag = selmon->pertag->prevtag;
 		selmon->pertag->prevtag = selmon->pertag->curtag;
 		selmon->pertag->curtag = tmptag;
@@ -2665,6 +2749,13 @@ view(const Arg *arg)
 
 	focus(NULL);
 	arrange(selmon);
+	if (switched_monitor) {
+		if (selmon->sel) {
+			XWarpPointer(dpy, None, selmon->sel->win, 0, 0, 0, 0, selmon->sel->w / 2, selmon->sel->h / 2);
+		} else {
+			XWarpPointer(dpy, None, selmon->barwin, 0, 0, 0, 0, selmon->mw / 2, 0);
+		}
+	}
 }
 
 Client *
