@@ -25,8 +25,8 @@ static const char *colors[][3]      = {
 };
 
 /* tagging */
-static const char *tags[] = { "1:", "2:", "3:", "4:", "5:", "6", "7", "8:", "9", "10: " };
-static const int permontag[] = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 };
+static const char *tags[] = { "1:", "2:", "3:", "4:", "5:", "6", "7:", "8:", "9", "10: ", "11" };
+static const int permontag[] = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1 };
 
 static const Rule rules[] = {
 	/* xprop(1):
@@ -141,10 +141,6 @@ static Key keys[] = {
 	{ MODKEY,                       XK_period, focusmon,       {.i = +1 } },
 	{ MODKEY|ShiftMask,             XK_comma,  tagmon,         {.i = -1 } },
 	{ MODKEY|ShiftMask,             XK_period, tagmon,         {.i = +1 } },
-	{ MODKEY,                       XK_minus,  focusmon,       {.i = 0 } },
-	{ MODKEY,                       XK_equal, focusmon,       {.i = 1 } },
-	{ MODKEY|ShiftMask,             XK_minus,  tagmon,       {.i = 0 } },
-	{ MODKEY|ShiftMask,             XK_equal, tagmon,       {.i = 1 } },
 	TAGKEYS(                        XK_1,                      0)
 	TAGKEYS(                        XK_2,                      1)
 	TAGKEYS(                        XK_3,                      2)
@@ -154,7 +150,9 @@ static Key keys[] = {
 	TAGKEYS(                        XK_7,                      6)
 	TAGKEYS(                        XK_8,                      7)
 	TAGKEYS(                        XK_9,                      8)
-	TAGKEYS(                        XK_0,                      9)
+	TAGKEYS(                        XK_0,                      9) //left monitor desktop 1
+	TAGKEYS(                        XK_minus,                 10) //left monitor desktop 2
+	TAGKEYS(                        XK_equal,                  8) //alias for last desktop on right monitor
 	{ MODKEY|ShiftMask,             XK_BackSpace,      quit,           {0} },
     { ALTKEY,                       XK_F8, spawn, SHCMD("fcitx && play ~/dotfiles/media/key.wav") },
     { ALTKEY,                       XK_F9, spawn, SHCMD("killall fcitx; setxkbmap proylatin && play ~/dotfiles/media/key.wav") },
