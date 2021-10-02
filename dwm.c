@@ -148,7 +148,6 @@ struct Monitor {
 	int by;               /* bar geometry */
 	int mx, my, mw, mh;   /* screen size */
 	int wx, wy, ww, wh;   /* window area  */
-	int gappx;            /* gaps between windows */
 	unsigned int seltags;
 	unsigned int sellt;
 	unsigned int tagset[2];
@@ -357,6 +356,7 @@ struct Pertag {
 	unsigned int sellts[LENGTH(tags) + 1]; /* selected layouts */
 	const Layout *ltidxs[LENGTH(tags) + 1][2]; /* matrix of tags and layouts indexes  */
 	int showbars[LENGTH(tags) + 1]; /* display bar for the current tag */
+	int gappx[LENGTH(tags) + 1];    /* gaps between windows */
 };
 static unsigned int scratchtag = 1 << LENGTH(tags);
 
@@ -801,7 +801,6 @@ createmon(int num)
 	m->nmaster = nmaster;
 	m->showbar = showbar;
 	m->topbar = topbar;
-	m->gappx = gappx;
 	m->lt[0] = &layouts[0];
 	m->lt[1] = &layouts[1 % LENGTH(layouts)];
 	strncpy(m->ltsymbol, layouts[0].symbol, sizeof m->ltsymbol);
@@ -816,7 +815,7 @@ createmon(int num)
 		m->pertag->ltidxs[i][1] = m->lt[1];
 		m->pertag->sellts[i] = m->sellt;
 		m->pertag->showbars[i] = m->showbar;
-
+		m->pertag->gappx[i] = gappx;
 	}
 
 	int do_init = 1;
@@ -1894,10 +1893,10 @@ setfullscreen(Client *c, int fullscreen)
 void
 setgaps(const Arg *arg)
 {
-	if ((arg->i == 0) || (selmon->gappx + arg->i < 0))
-		selmon->gappx = 0;
+	if ((arg->i == 0) || (selmon->pertag->gappx[selmon->pertag->curtag] + arg->i < 0))
+		selmon->pertag->gappx[selmon->pertag->curtag] = 0;
 	else
-		selmon->gappx += arg->i;
+		selmon->pertag->gappx[selmon->pertag->curtag] += arg->i;
 	arrange(selmon);
 }
 
@@ -2146,19 +2145,20 @@ tile(Monitor *m)
 	if (n == 0)
 		return;
 
+	int curgappx = m->pertag->gappx[m->pertag->curtag];
 	if (n > m->nmaster)
 		mw = m->nmaster ? m->ww * m->mfact : 0;
 	else
-		mw = m->ww - m->gappx;
-	for (i = 0, my = ty = m->gappx, c = nexttiled(m->clients); c; c = nexttiled(c->next), i++)
+		mw = m->ww - curgappx;
+	for (i = 0, my = ty = curgappx, c = nexttiled(m->clients); c; c = nexttiled(c->next), i++)
 		if (i < m->nmaster) {
-			h = (m->wh - my) / (MIN(n, m->nmaster) - i) - m->gappx;
-			resize(c, m->wx + m->gappx, m->wy + my, mw - (2*c->bw) - m->gappx, h - (2*c->bw), 0);
-			my += HEIGHT(c) + m->gappx;
+			h = (m->wh - my) / (MIN(n, m->nmaster) - i) - curgappx;
+			resize(c, m->wx + curgappx, m->wy + my, mw - (2*c->bw) - curgappx, h - (2*c->bw), 0);
+			my += HEIGHT(c) + curgappx;
 		} else {
-			h = (m->wh - ty) / (n - i) - m->gappx;
-			resize(c, m->wx + mw + m->gappx, m->wy + ty, m->ww - mw - (2*c->bw) - 2*m->gappx, h - (2*c->bw), 0);
-			ty += HEIGHT(c) + m->gappx;
+			h = (m->wh - ty) / (n - i) - curgappx;
+			resize(c, m->wx + mw + curgappx, m->wy + ty, m->ww - mw - (2*c->bw) - 2*curgappx, h - (2*c->bw), 0);
+			ty += HEIGHT(c) + curgappx;
 		}
 }
 
