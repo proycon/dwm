@@ -35,9 +35,12 @@ static const Rule rules[] = {
 	 *	WM_NAME(STRING) = title
 	 */
 	/* class      instance    title       tags mask     isfloating   isterminal  noswallow  monitor */
-	{ "Gimp",     NULL,       NULL,       1 << 4,       0,           0,          0,        -1 },
-	{ "Inkscape",     NULL,       NULL,       1 << 4,       0,           0,          0,        -1 },
-	{ "Firefox",  NULL,       NULL,       1 << 2,       0,           0,          0,        -1 },
+	{ "Gimp",     NULL,       NULL,       1 << 4,       0,           0,          0,        0 },
+	{ "Inkscape",     NULL,       NULL,       1 << 4,       0,           0,          0,        0 },
+	{ "Firefox",  NULL,       NULL,       1 << 2,       0,           0,          0,        0 },
+	{ "TelegramDesktop",  NULL,       NULL,       1 << 6,       0,           0,          0,        0 },
+	{ "Element",  NULL,       NULL,       1 << 6,       0,           0,          0,      0 },
+	{ "Slack",  NULL,       NULL,       1 << 6,       0,           0,          0,        0  },
 	{ "Menu",     NULL,       NULL,       0,            1,           0,          0,        -1 },
 	{ "Lxappearance",     NULL,       NULL,       0,            1,    0,          0,               -1 },
 	{ "Lightdm-gtk-greeter-settings",     NULL,       NULL,       0,            1,     0,          0,              -1 },
