@@ -139,8 +139,9 @@ static Key keys[] = {
 	{ MODKEY,                       XK_backslash,  togglefloating, {0} },
 	{ MODKEY,                       XK_s,      togglesticky,   {0} },
 	{ MODKEY,                       XK_comma,  setgaps,        {.i = -3 } },
+	{ MODKEY|ShiftMask,             XK_comma,  setgaps,        {.i = 0  } },
 	{ MODKEY,                       XK_period,  setgaps,        {.i = +3 } },
-	{ MODKEY|ShiftMask,             XK_period,  setgaps,        {.i = 0  } },
+	{ MODKEY|ShiftMask,             XK_period,  setgaps,        {.i = +9  } },
 	TAGKEYS(                        XK_1,                      0)
 	TAGKEYS(                        XK_2,                      1)
 	TAGKEYS(                        XK_3,                      2)
