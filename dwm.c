@@ -944,10 +944,6 @@ drawbar(Monitor *m)
 		occ |= c->tags == 255 ? 0 : c->tags;
 		if (c->isurgent)
 			urg |= c->tags;
-		if (c->next == c) { //failsafe
-			fprintf(stderr,"[dwm drawbar] FAILSAFE triggered! should not happen\n");
-			c->next = NULL;
-		}
 	}
 	x = 0;
 	for (i = 0; i < LENGTH(tags); i++) {
@@ -1801,6 +1797,7 @@ sendmon(Client *c, Monitor *m, int assigntags)
 {
 	if (c->mon == m)
 		return;
+	fprintf(stderr,"[dwm sendmon] pre-send client info: m->num=%d, c->mon==m=%d, c->tags=%d m->tagset=%d\n", m->num, c->mon == m, c->tags, m->tagset[m->seltags]);
 	unfocus(c, 1);
 	detach(c);
 	detachstack(c);
@@ -1808,6 +1805,14 @@ sendmon(Client *c, Monitor *m, int assigntags)
 	if (assigntags) c->tags = m->tagset[m->seltags]; /* assign tags of target monitor */
 	attachbottom(c);
 	attachstack(c);
+	//DEBUG: failsafe
+	fprintf(stderr,"[dwm sendmon] post-send client info: m->num=%d, c->mon==m=%d, c->tags=%d m->tagset=%d\n", m->num, c->mon == m, c->tags, m->tagset[m->seltags]);
+	for (c = m->clients; c; c = c->next) {
+		if (c->next == c) {
+			fprintf(stderr,"[dwm sendmon] FAILSAFE triggered! should not happen: m->num=%d, c->mon==m=%d, c->tags=%d m->tagset=%d\n", m->num, c->mon == m, c->tags, m->tagset[m->seltags]);
+			c->next = NULL;
+		}
+	}
 	focus(NULL);
 	arrange(NULL);
 }
