@@ -98,7 +98,7 @@ static const Layout layouts[] = {
 #define STACKKEYS(MOD,ACTION) \
 	{ MOD, XK_j,     ACTION##stack, {.i = INC(+1) } }, \
 	{ MOD, XK_k,     ACTION##stack, {.i = INC(-1) } }, \
-	{ MOD, XK_apostrophe, ACTION##stack, {.i = PREVSEL } }, \
+	{ MOD, XK_q,     ACTION##stack, {.i = PREVSEL } }, \
 	{ MOD, XK_g,     ACTION##stack, {.i = 0 } },
 /*
 	{ MOD|ShiftMask, XK_a,     ACTION##stack, {.i = 1 } }, \
@@ -136,7 +136,8 @@ static Key keys[] = {
 	{ MODKEY,                       XK_m,      setlayout,      {.v = &layouts[2]} },
 	{ MODKEY,                       XK_z,      focusmonnum,        {.i = 1 } },
 	{ MODKEY,                       XK_x,      focusmonnum,        {.i = 0 } },
-	{ MODKEY,                       XK_q,      focusmon,         {.i = 1 } },
+	{ MODKEY,                       XK_apostrophe,      focusmon,         {.i = 1 } },
+	{ MODKEY|ShiftMask,             XK_apostrophe,      tagmon,         {.i = -1 } },
 	{ MODKEY|ShiftMask,             XK_z,      tagmonnum,        {.i = 1 } },
 	{ MODKEY|ShiftMask,             XK_x,      tagmonnum,        {.i = 0 } },
 	{ MODKEY|ControlMask,		    XK_comma,  cyclelayout,    {.i = -1 } },
