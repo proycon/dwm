@@ -120,7 +120,7 @@ static Key keys[] = {
 	{ MODKEY,                       XK_space,      spawn,          {.v = dmenucmd } },
 	{ MODKEY|ShiftMask,             XK_Return, spawn,          {.v = termcmd } },
 	{ MODKEY,                       XK_a,  togglescratch,  {.v = scratchpadcmd } },
-	{ MODKEY,                       XK_b,      togglebar,      {0} },
+	//{ MODKEY,                       XK_b,      togglebar,      {0} },
 	STACKKEYS(MODKEY,                          focus)
 	STACKKEYS(MODKEY|ShiftMask,                push)
 	{ MODKEY,                       XK_i,      incnmaster,     {.i = +1 } },
@@ -137,6 +137,8 @@ static Key keys[] = {
 	{ MODKEY,                       XK_x,      focusmonnum,        {.i = 0 } },
 	{ MODKEY|ShiftMask,             XK_z,      tagmonnum,        {.i = 1 } },
 	{ MODKEY|ShiftMask,             XK_x,      tagmonnum,        {.i = 0 } },
+	{ MODKEY|ShiftMask,             XK_v,      tagmon,        {.i = -1 } },
+	{ MODKEY|ShiftMask,             XK_b,      tagmon,        {.i = +1 } },
 	{ MODKEY|ControlMask,		XK_comma,  cyclelayout,    {.i = -1 } },
 	{ MODKEY|ControlMask,           XK_period, cyclelayout,    {.i = +1 } },
 	{ MODKEY,                       XK_apostrophe,  cyclelayout,      {0} },

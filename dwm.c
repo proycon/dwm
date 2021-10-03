@@ -914,7 +914,8 @@ idxtomon(int idx)
 			return m;
 	}
 
-	return mons; //fallback
+	fprintf(stderr, "[dwm idxtomon(%d)] Monitor not found\n", idx);
+	return NULL;
 }
 
 void
@@ -943,6 +944,10 @@ drawbar(Monitor *m)
 		occ |= c->tags == 255 ? 0 : c->tags;
 		if (c->isurgent)
 			urg |= c->tags;
+		if (c->next == c) { //failsafe
+			fprintf(stderr,"[dwm drawbar] FAILSAFE triggered! should not happen\n");
+			c->next = NULL;
+		}
 	}
 	x = 0;
 	for (i = 0; i < LENGTH(tags); i++) {
@@ -1047,8 +1052,9 @@ focus(Client *c)
 {
 	if (!c || !ISVISIBLE(c))
 		for (c = selmon->stack; c && !ISVISIBLE(c); c = c->snext);
-	if (selmon->sel && selmon->sel != c)
+	if (selmon->sel && selmon->sel != c) {
 		unfocus(selmon->sel, 0);
+	}
 	if (c) {
 		if (c->mon != selmon)
 			selmon = c->mon;
@@ -1799,7 +1805,7 @@ sendmon(Client *c, Monitor *m, int assigntags)
 	detach(c);
 	detachstack(c);
 	c->mon = m;
-	if (assigntags != 0) c->tags = m->tagset[m->seltags]; /* assign tags of target monitor */
+	if (assigntags) c->tags = m->tagset[m->seltags]; /* assign tags of target monitor */
 	attachbottom(c);
 	attachstack(c);
 	focus(NULL);
@@ -2107,7 +2113,10 @@ tag(const Arg *arg)
 				if ((1 << i) & arg->ui) {
 					//find the monitor for the (first occ. of the) tag
 					selmon->sel->tags = arg->ui & TAGMASK;
-					sendmon(selmon->sel, idxtomon(permontag[i]), 0);
+					Monitor * m = idxtomon(permontag[i]);
+					if (!m)
+						return;
+					sendmon(selmon->sel, m, 0);
 					break;
 				}
 			}
@@ -2124,7 +2133,9 @@ tagmon(const Arg *arg)
 {
 	if (!selmon->sel || !mons->next)
 		return;
-	sendmon(selmon->sel, dirtomon(arg->i), 1);
+	Monitor * m = dirtomon(arg->i);
+	fprintf(stderr, "[dwm tagmon] Sending to monitor %d: %d\n", m->num, (int) m);
+	if (m) sendmon(selmon->sel, m, 1);
 }
 
 void
@@ -2132,7 +2143,11 @@ tagmonnum(const Arg *arg)
 {
 	if (!selmon->sel || !mons->next)
 		return;
-	sendmon(selmon->sel, idxtomon(arg->i), 1);
+	Monitor * m = idxtomon(arg->i);
+	fprintf(stderr, "[dwm tagmonnum] Sending to monitor %d: %d\n", m->num, (int) m);
+	//Even with behaviour identical to tagmon(), this eventually trigger the failsafe in dwm drawbar!!
+	//I don't understand why!
+	if (m) sendmon(selmon->sel, m, 1);
 }
 
 void
