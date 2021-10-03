@@ -41,6 +41,7 @@ static const Rule rules[] = {
 	{ "TelegramDesktop",  NULL,       NULL,       1 << 6,       0,           0,          0,        0 },
 	{ "Element",  NULL,       NULL,       1 << 6,       0,           0,          0,      0 },
 	{ "Slack",  NULL,       NULL,       1 << 6,       0,           0,          0,        0  },
+	{ "zoom",  NULL,       NULL,       1 << 8,       0,           0,          0,        0  },
 	{ "Menu",     NULL,       NULL,       0,            1,           0,          0,        -1 },
 	{ "Lxappearance",     NULL,       NULL,       0,            1,    0,          0,               -1 },
 	{ "Lightdm-gtk-greeter-settings",     NULL,       NULL,       0,            1,     0,          0,              -1 },
