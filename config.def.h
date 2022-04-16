@@ -195,6 +195,7 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,    			XK_slash, spawn, SHCMD("~/dotfiles/timetracker.sh 15") },
 	{ MODKEY|ControlMask|ShiftMask, XK_slash, spawn, SHCMD("~/dotfiles/timetracker.sh 60") },
 	{ MODKEY,						XK_w, spawn, SHCMD("~/dotfiles/buku-dmenu") },
+	{ MODKEY,                       XK_e,  spawn, SHCMD("~/dotfiles/translate.sh") },
 	{ MODKEY,						XK_u, spawn, SHCMD("~/dotfiles/dmenu-files.sh /nettmp -t") },
 	{ MODKEY,						XK_o, spawn, SHCMD("~/dotfiles/dmenu-files.sh /home/proycon -t") },
 	{ 0, XF86XK_AudioPrev,		spawn,		SHCMD("mpc prev") },
