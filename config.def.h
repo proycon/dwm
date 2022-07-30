@@ -198,6 +198,7 @@ static Key keys[] = {
 	{ MODKEY,                       XK_e,  spawn, SHCMD("~/dotfiles/translate.sh") },
 	{ MODKEY,						XK_u, spawn, SHCMD("~/dotfiles/dmenu-files.sh /nettmp -t") },
 	{ MODKEY,						XK_o, spawn, SHCMD("~/dotfiles/dmenu-files.sh /home/proycon -t") },
+	{ MODKEY,						XK_n, spawn, SHCMD("~/dotfiles/network-menu.sh") },
 	{ 0, XF86XK_AudioPrev,		spawn,		SHCMD("mpc prev") },
 	{ 0, XF86XK_AudioNext,		spawn,		SHCMD("mpc next") },
 	{ 0, XF86XK_AudioPause,		spawn,		SHCMD("mpc pause") },
