@@ -173,7 +173,7 @@ static Key keys[] = {
     { ALTKEY,                       XK_F12, spawn, SHCMD("killall fcitx5; setxkbmap proyar && play ~/dotfiles/media/key.wav") },
     { ALTKEY|ShiftMask,             XK_F12, spawn, SHCMD("killall fcitx5; setxkbmap proylogic && play ~/dotfiles/media/key.wav") },
 	{ MODKEY,						XK_F1, spawn, SHCMD("alacritty --working-directory ~ -t mail -e neomutt") },
-	{ MODKEY,						XK_F2, spawn, SHCMD("alacritty --working-directory ~ -t vim -e nvim") },
+	{ MODKEY,						XK_F2, spawn, SHCMD("alacritty --working-directory ~ -t vim -e ~/bin/tm nvim") },
 	{ ALTKEY,						XK_F2, spawn, SHCMD("~/bin/lala") }, /* start music */
 	{ ALTKEY|ShiftMask,				XK_F2, spawn, SHCMD("killall snapclient; mpc stop") }, /* stop music */
 	{ MODKEY,						XK_F3, spawn, SHCMD("~/dotfiles/homecommand.sh") },
